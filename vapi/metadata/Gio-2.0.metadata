@@ -277,13 +277,12 @@ TlsFileDatabase
 TlsServerConnection
   .new nullable
 InputMessage
-  .vectors array_length_field="num_vectors"
   .control_messages type="GLib.SocketControlMessage***"
   .num_control_messages type="uint*"
 InputVector
   .buffer type="uint8[]" array_length_field="size"
 OutputMessage
-  .vectors array array_length_field="num_vectors"
+  .vectors array
   .control_messages type="GLib.SocketControlMessage***"
   .num_control_messages type="uint*"
 OutputVector
