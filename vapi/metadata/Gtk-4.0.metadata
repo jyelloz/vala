@@ -67,34 +67,14 @@ Accessible
   .connect_widget_destroyed replacement="set_widget"
 CellRenderer
   .get_size replacement="get_preferred_size"
-  .cell_background_gdk replacement="cell_background_rgba"
 CellView
   .set_background_color replacement="set_background_rgba"
   .background_gdk replacement="background_rgba"
-ColorButton
-  .color replacement="ColorChooser.rgba"
-ColorSelection
-  .get_current_color replacement="get_current_rgba"
-  .get_previous_color replacement="get_previous_rgba"
-  .set_current_color replacement="set_current_rgba"
-  .set_previous_color replacement="set_previous_rgba"
-  .current_color replacement="current_rgba"
-MenuItem
-  .get_right_justified replacement="Widget.get_hexpand and Widget.get_halign"
-  .set_right_justified replacement="Widget.set_hexpand and Widget.set_halign"
 
 // G-I cannot deprecate whole types
-Action deprecated_since="3.10" replacement="GLib.Action"
-ActionGroup deprecated_since="3.10"
-Alignment deprecated_since="3.14"
 Gradient deprecated_since="3.8"
 IconSet deprecated_since="3.10" replacement="IconTheme"
 IconSource deprecated_since="3.10" replacement="IconTheme"
-RadioAction deprecated_since="3.10"
-Table deprecated_since="3.4" replacement="Grid"
-ToggleAction deprecated_since="3.10"
-UIManager deprecated_since="3.10"
-Activatable deprecated_since="3.10"
 
 // G-I cannot handle returning non-boxed types
 binding_set_by_class skip=false
@@ -136,21 +116,13 @@ MessageDialog
 RecentChooserDialog
   .new skip=false
   .new_for_manager skip=false
-Style
-  .get skip=false
 StyleContext
   .get skip=false
   .get_style skip=false
-StyleProperties
-  .set skip=false
 TextBuffer
   .create_tag skip=false
   .insert_with_tags skip=false
   .insert_with_tags_by_name skip=false
-ThemingEngine
-  .get skip=false
-  .get_style skip=false
-  .get_style_property skip=false
 TreePath
   .new_from_indices skip=false sentinel="-1"
 TreeStore
@@ -162,7 +134,7 @@ TreeView
 TreeViewColumn
   .set_attributes skip=false
   .new_with_attributes skip=false
-Widget
+Widget abstract=false
   .new skip=false
   .style_get skip=false
 Actionable
@@ -185,8 +157,6 @@ TreeModel
 Clipboard
   .set_with_data skip=false
   .set_with_owner skip=false
-ColorSelection
-  .set_change_palette_with_screen_hook skip=false
 
 // Unregistered callback types
 Builder
@@ -282,9 +252,6 @@ RecentFilterInfo
   .applications nullable
   .groups nullable
 
-// Bug #: element-type properties
-Settings.color_hash type="GLib.HashTable<string,Gdk.Color>"
-
 // Skipped for G-I, but usable from Vala
 FlowBox
   .bind_model skip=false
@@ -328,20 +295,12 @@ RecentInfo
   .get_modified type="time_t"
   .get_visited type="time_t"
 
-Stock skip
-STOCK_* name="STOCK_(.+)" parent="Gtk.Stock"
-
 // Not sure what g-i was thinking
-NumerableIcon
-  .new symbol_type="constructor"
-  .new_with_style_context symbol_type="constructor"
 TreeModel
   .filter_new parent="Gtk.TreeModelFilter" name="new" symbol_type="constructor"
   .sort_new_with_model parent="Gtk.TreeModelSort" name="new_with_model" symbol_type="constructor"
 
 // These aren't actually used publicly anywhere.
-TableChild skip
-TableRowCol skip
 TargetPair skip
 
 // Vala-specific, not really bugs
@@ -350,24 +309,10 @@ TargetPair skip
 // Backwards compatibility
 AccelGroup
   .find type="Gtk.AccelKey*"
-Action
-  .create_icon.icon_size type="Gtk.IconSize"
-ActionGroup
-  .add_actions* skip=false
-  .add_*_actions* skip=false
-  .add_radio_actions.on_change type="Gtk.RadioActionCallback"
-  .add_radio_actions_full.on_change type="owned Gtk.RadioActionCallback"
 Button
   .new_from_icon_name.size type="Gtk.IconSize"
 ClipboardRichTextReceivedFunc
   .text type="uint8[]?" array_length_idx=3
-ColorButton
-  .get_color return_void
-ColorSelection
-  .get_current_color return_void
-  .get_previous_color return_void
-ColorSelectionDialog
-  .get_color_selection type="unowned Gtk.ColorSelection"
 CssProvider
   .load_from_data name="load_from_buffer"
 Entry
@@ -393,24 +338,8 @@ PlacesSidebar
   .show_other_locations#signal name="show_other_locations_requested"
 SelectionData
   .get_data skip=false
-Style
-  .base unowned=false
-  .bg unowned=false
-  .dark unowned=false
-  .fg unowned=false
-  .light unowned=false
-  .mid unowned=false
-  .text unowned=false
-  .text_aa unowned=false
-  .copy skip
-  .get_style_property return_void
 render_* parent="Gtk.StyleContext"
 render_* symbol_type="method" instance_idx=0
-StyleProperties
-  .get skip=false
-  .lookup_property skip=false
-  .register_property skip=false
-  .register_property.parse_func nullable
 TextBuffer
   .delete.start ref
   .delete.end ref
@@ -424,9 +353,6 @@ TextBuffer
 TextView
   .get_iter_location return_void
   .get_visible_rect return_void
-ThemingEngine
-  .register_property skip=false
-  .render_icon_pixbuf skip=false unowned=false
 ToolItem
   .get_icon_size type="Gtk.IconSize"
 ToolPalette
@@ -459,12 +385,9 @@ TreeModel
   .get_value return_void
 BindingArg
   .d.* skip
-StockItem
-  .copy skip=false unowned=false
 TextIter
   .get_attributes.values out=false
 icon_size_*#function skip
-key_snooper_install skip=false
 rc_property_parse_* skip
 show_about_dialog skip=false
 test_create_widget skip=false

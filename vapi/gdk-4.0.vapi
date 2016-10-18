@@ -5592,13 +5592,12 @@ namespace Gdk {
 		public void begin_move_drag (int button, int root_x, int root_y, uint32 timestamp);
 		[Version (since = "3.4")]
 		public void begin_move_drag_for_device (Gdk.Device device, int button, int root_x, int root_y, uint32 timestamp);
-		[Version (deprecated = true, deprecated_since = "3.22")]
-		public void begin_paint_rect (Gdk.Rectangle rectangle);
-		[Version (deprecated = true, deprecated_since = "3.22")]
-		public void begin_paint_region (Cairo.Region region);
 		public void begin_resize_drag (Gdk.WindowEdge edge, int button, int root_x, int root_y, uint32 timestamp);
 		[Version (since = "3.4")]
 		public void begin_resize_drag_for_device (Gdk.WindowEdge edge, Gdk.Device device, int button, int root_x, int root_y, uint32 timestamp);
+		[CCode (has_construct_function = false)]
+		[Version (since = "3.90")]
+		public Window.child (Gdk.Window parent, int event_mask, Gdk.Rectangle position);
 		[Version (deprecated = true, deprecated_since = "3.8", since = "2.6")]
 		public void configure_finished ();
 		public static void constrain_size (Gdk.Geometry geometry, Gdk.WindowHints flags, int width, int height, out int new_width, out int new_height);
@@ -5619,7 +5618,6 @@ namespace Gdk {
 		public void enable_synchronized_configure ();
 		[Version (since = "3.22")]
 		public void end_draw_frame (Gdk.DrawingContext context);
-		public void end_paint ();
 		[Version (since = "2.18")]
 		public bool ensure_native ();
 		[Version (deprecated = true, deprecated_since = "3.14", since = "2.18")]
@@ -5709,6 +5707,9 @@ namespace Gdk {
 		public bool has_native ();
 		public void hide ();
 		public void iconify ();
+		[CCode (has_construct_function = false)]
+		[Version (since = "3.90")]
+		public Window.input (Gdk.Window parent, int event_mask, Gdk.Rectangle position);
 		[Version (since = "2.10")]
 		public void input_shape_combine_region (Cairo.Region shape_region, int offset_x, int offset_y);
 		public void invalidate_maybe_recurse (Cairo.Region region, Gdk.WindowChildFunc? child_func);
@@ -5751,7 +5752,6 @@ namespace Gdk {
 		public void set_child_shapes ();
 		public void set_composited (bool composited);
 		public void set_cursor (Gdk.Cursor? cursor);
-		public static void set_debug_updates (bool setting);
 		public void set_decorations (Gdk.WMDecoration decorations);
 		[Version (since = "3.0")]
 		public void set_device_cursor (Gdk.Device device, Gdk.Cursor cursor);
@@ -5844,7 +5844,7 @@ namespace Gdk {
 		[Version (since = "3.22")]
 		public int get_n_groups ();
 	}
-	[CCode (cheader_filename = "gdk/gdk.h")]
+	[CCode (cheader_filename = "gdk/gdk.h", has_type_id = false)]
 	[SimpleType]
 	public struct Atom : uint {
 		[CCode (cname = "GDK_NONE")]
@@ -5913,7 +5913,7 @@ namespace Gdk {
 		[Version (since = "3.0")]
 		public string to_string ();
 	}
-	[CCode (cheader_filename = "gdk/gdk.h")]
+	[CCode (cheader_filename = "gdk/gdk.h", type_id = "gdk_rectangle_get_type ()")]
 	public struct Rectangle : Cairo.RectangleInt {
 		[Version (since = "3.20")]
 		public bool equal (Gdk.Rectangle rect2);
@@ -6519,7 +6519,9 @@ namespace Gdk {
 	public errordomain GLError {
 		NOT_AVAILABLE,
 		UNSUPPORTED_FORMAT,
-		UNSUPPORTED_PROFILE;
+		UNSUPPORTED_PROFILE,
+		COMPILATION_FAILED,
+		LINK_FAILED;
 		public static GLib.Quark quark ();
 	}
 	[CCode (cheader_filename = "gdk/gdk.h", instance_pos = 1.9)]
@@ -6569,9 +6571,6 @@ namespace Gdk {
 	[CCode (cheader_filename = "gdk/gdk.h")]
 	public static void beep ();
 	[CCode (cheader_filename = "gdk/gdk.h")]
-	[Version (deprecated = true, deprecated_since = "3.22", since = "2.8")]
-	public static Cairo.Context cairo_create (Gdk.Window window);
-	[CCode (cheader_filename = "gdk/gdk.h")]
 	[Version (since = "3.16")]
 	public static void cairo_draw_from_gl (Cairo.Context cr, Gdk.Window window, int source, int source_type, int buffer_scale, int x, int y, int width, int height);
 	[CCode (cheader_filename = "gdk/gdk.h")]
@@ -6602,6 +6601,9 @@ namespace Gdk {
 	[CCode (cheader_filename = "gdk/gdk.h")]
 	[Version (since = "3.10")]
 	public static Cairo.Surface cairo_surface_create_from_pixbuf (Gdk.Pixbuf pixbuf, int scale, Gdk.Window? for_window);
+	[CCode (cheader_filename = "gdk/gdk.h")]
+	[Version (since = "3.90")]
+	public static void cairo_surface_upload_to_gl (Cairo.Surface surface, int target, int width, int height, Gdk.GLContext? context);
 	[CCode (cheader_filename = "gdk/gdk.h")]
 	[Version (since = "3.0")]
 	public static void disable_multidevice ();

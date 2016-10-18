@@ -1,10 +1,5 @@
 namespace Gtk {
-	[CCode (type_cname = "GCallback")]
-	[Version (deprecated_since = "3.10")]
-	public delegate void ActionCallback (Action action);
 	public delegate bool AccelGroupActivate (Gtk.AccelGroup accel_group, GLib.Object acceleratable, uint keyval, Gdk.ModifierType modifier);
-	[CCode (type_cname = "GCallback")]
-	public delegate void RadioActionCallback (Gtk.Action action, Gtk.Action current);
 
 	[CCode (has_type_id = false)]
 	[Compact]
@@ -25,11 +20,6 @@ namespace Gtk {
 		public virtual void forall_internal (bool include_internal, Gtk.Callback callback);
 		[HasEmitter]
 		public virtual signal void set_focus_child (Gtk.Widget? child);
-
-		[Version (deprecated_since = "vala-0.34", replacement = "find_child_property")]
-		public class unowned GLib.ParamSpec? class_find_child_property (string property_name);
-		[Version (deprecated_since = "vala-0.34", replacement = "list_child_propertie")]
-		public class (unowned GLib.ParamSpec)[] class_list_child_properties ();
 	}
 
 	[CCode (type_id = "gtk_container_accessible_get_type ()")]
@@ -38,11 +28,6 @@ namespace Gtk {
 		public virtual int add_gtk (Gtk.Widget widget, void* data);
 		[NoWrapper]
 		public virtual int remove_gtk (Gtk.Widget widget, void* data);
-	}
-
-	[CCode (type_id = "gtk_css_provider_get_type ()")]
-	public class CssProvider : GLib.Object {
-		public bool load_from_data (string data, ssize_t length = -1) throws GLib.Error;
 	}
 
 	[CCode (cheader_filename = "gtk/gtk.h", copy_function = "gtk_icon_info_copy", free_function = "gtk_icon_info_free", type_id = "gtk_icon_info_get_type ()")]
@@ -64,45 +49,10 @@ namespace Gtk {
 		public virtual void copy_to (Gtk.Style dest);
 	}
 
-	[CCode (has_type_id = false)]
-	public struct ActionEntry {
-		public weak string name;
-		public weak string stock_id;
-		public weak string label;
-		public weak string accelerator;
-		public weak string tooltip;
-		[CCode (delegate_target = false, type = "GCallback")]
-		public weak Gtk.ActionCallback callback;
-	}
-
-	[CCode (has_type_id = false)]
-	public struct ToggleActionEntry {
-		public weak string name;
-		public weak string stock_id;
-		public weak string label;
-		public weak string accelerator;
-		public weak string tooltip;
-		[CCode (delegate_target = false, type = "GCallback")]
-		public weak Gtk.ActionCallback callback;
-		public bool is_active;
-	}
-
 	[CCode (type_id = "gtk_tree_model_get_type ()")]
 	public interface TreeModel : GLib.Object {
 		[HasEmitter]
 		public virtual signal void rows_reordered (Gtk.TreePath path, Gtk.TreeIter iter, [CCode (array_length = false)] int[] new_order);
-	}
-
-	[CCode (type_id = "gtk_widget_get_type ()")]
-	public class Widget : GLib.Object {
-		[NoWrapper, Version (deprecated = true), CCode (vfunc_name = "get_preferred_height_for_width")]
-		public virtual void get_preferred_height_for_width_internal (int width, out int minimum_height, out int natural_height);
-		[NoWrapper, Version (deprecated = true), CCode (vfunc_name = "get_preferred_height")]
-		public virtual void get_preferred_height_internal (out int minimum_height, out int natural_height);
-		[NoWrapper, Version (deprecated = true), CCode (vfunc_name = "get_preferred_width_for_height")]
-		public virtual void get_preferred_width_for_height_internal (int height, out int minimum_width, out int natural_width);
-		[NoWrapper, Version (deprecated = true), CCode (vfunc_name = "get_preferred_width")]
-		public virtual void get_preferred_width_internal (out int minimum_width, out int natural_width);
 	}
 
 	[CCode (type_id = "gtk_widget_accessible_get_type ()")]
@@ -135,15 +85,5 @@ namespace Gtk {
 		DEFAULT,
 		[CCode (cname = "GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID")]
 		UNSORTED
-	}
-
-	[Version (deprecated_since = "3.10")]
-	[CCode (cheader_filename = "gtk/gtk.h")]
-	namespace Stock {
-		public static void add (Gtk.StockItem[] items);
-		public static void add_static (Gtk.StockItem[] items);
-		public static GLib.SList<string> list_ids ();
-		public static bool lookup (string stock_id, out Gtk.StockItem item);
-		public static void set_translate_func (string domain, owned Gtk.TranslateFunc func);
 	}
 }
